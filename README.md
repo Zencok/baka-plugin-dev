@@ -59,10 +59,10 @@ Node 检查、真实宿主测试、已安装客户端验证和远程服务可用
 
 ## 安装 Skill
 
-仓库根目录就是一个完整 skill。把仓库克隆到 Codex 的技能目录即可，例如本地安装：
+仓库根目录就是一个完整 skill。把仓库克隆到 Codex 的技能目录即可，例如 Windows 安装：
 
 ```powershell
-git clone --local D:/Github/Music/baka-plugin-dev "$env:USERPROFILE/.codex/skills/baka-plugin-dev"
+git clone https://github.com/Zencok/baka-plugin-dev.git "$env:USERPROFILE/.codex/skills/baka-plugin-dev"
 ```
 
 技能目录已存在时，在原副本更新，不要把第二份覆盖进去。有自定义 `CODEX_HOME` 时使用其 `skills/baka-plugin-dev` 目录。安装后开启新会话，使用：
@@ -75,6 +75,6 @@ git clone --local D:/Github/Music/baka-plugin-dev "$env:USERPROFILE/.codex/skill
 
 ## 维护约定
 
-V2 接口变化时，同时更新声明、契约向量、示例、教程与对应测试。上游快照记录在 [UPSTREAM.json](UPSTREAM.json)，设计分工见 [DESIGN.md](DESIGN.md)。当前仓库为本地 Git 仓库，尚未配置远程发布地址；迁移至远程时再更新应用仓库中的入口链接。
+V2 接口变化时，同时更新声明、契约向量、示例、教程与对应测试。上游快照记录在 [UPSTREAM.json](UPSTREAM.json)，设计分工见 [DESIGN.md](DESIGN.md)。远程仓库为 [Zencok/baka-plugin-dev](https://github.com/Zencok/baka-plugin-dev)；应用仓库统一引用此入口。
 
 复用文件的来源和声明见 [NOTICE.md](NOTICE.md) 与 [LICENSE](LICENSE)。插件自身的作者、许可证、授权和服务配置由插件维护者保留并明确声明。
