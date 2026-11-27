@@ -8,9 +8,9 @@
 
 | 仓库 | 路径 | 核对时的 HEAD |
 |---|---|---|
-| Flutter/Rust 应用 | `D:/Github/Music/BakaMusicFlutter` | `b8efb75c72c1075aba95cf32838f2c9b569a025b` |
+| Flutter/Rust 应用 | `D:/Github/Music/BakaMusicFlutter` | `4d06895fc5c480c06af3702478abac04619cf1d2` |
 | 成品公共插件 | `D:/Github/Music/baka-plugins` | `97847de` |
-| Electron 应用 | `D:/Github/Music/BakaMusic` | `1b05416a1fb90e12608c58127456a2fca267abcc` |
+| Electron 应用 | `D:/Github/Music/BakaMusic` | `f87cf00d70c98bec24dfab30dc1627edcf0edc37` |
 
 本地设计文档可能被忽略或存在未提交更新，因此上述 HEAD 仅标识 checkout，不意味着每份已读工作区文件都已包含在提交中。复用的工具与向量文件另按实际字节记录 SHA-256，见 [UPSTREAM.json](../UPSTREAM.json)。
 
@@ -36,7 +36,8 @@
 | 成品提供方协议与元数据 | 公共插件 `plugins/v2/{wy,qq,kw,kg,mg,bilibili,am}.js` |
 | 成品生成与分发关系 | 公共插件 `plugins/v2/build.cjs`、`README.md`、`ATTRIBUTION.md`、`DESIGN.md` |
 | 公共插件行为和原生 fixture | 公共插件 `tests/` |
-| Electron 现有旧接口边界 | Electron `src/types/plugin.d.ts`、`src/shared/plugin-manager/rpc.ts` |
+| Electron V2 类型与 RPC | Electron `src/types/plugin.d.ts`、`src/shared/plugin-manager/rpc.ts` |
+| Electron 原生 V2 宿主与 LX 兼容 | Electron `plugin-runtime/src/`、`src/shared/plugin-manager/main/`、`scripts/lx-import-native.test.cjs` |
 
 上游新增接口时核对实现、测试、声明和实际消费者，不能只在能力名列表中加一个词。
 
@@ -52,7 +53,7 @@ Flutter 的 `PROPOSAL.md`、`OPTIONS.md` 记录设计选型，后续 `SPEC.md` �
 
 新插件和当前 Flutter/Rust 执行环境只使用 V2 契约。现有原始及混淆 LX 脚本必须继续直接导入；显式 LX 选择绕过格式识别，原文不改写，兼容包装在该插件独占的 QuickJS 上下文提供 LX 全局对象以支持间接 eval、Function 和构造器查找。普通 V2 包保持精简环境，LX 事件 API 不成为新插件开发接口。
 
-BakaMusic Electron 仓库移除旧教程、改为引用此仓库，只改变文档入口。它当前的插件类型和 RPC 仍是另一套接口；此任务没有迁移其运行时。因此新 V2 插件的客户端目标应明确写为已支持当前契约的版本。
+BakaMusic Electron 的早期文档迁移仅将入口指向此仓库；后续 `f87cf00` 已接入原生 V2 宿主、统一 capability/RPC 与显式解析器绑定，并保留原始及混淆 LX 导入兼容。Flutter 的 `4d06895` 同步修复间接全局查找和延迟设置读取。新插件仍须明确支持的客户端版本，不能将旧发行版视为已完成迁移。
 
 ## Apple 回调的集成核对点
 
