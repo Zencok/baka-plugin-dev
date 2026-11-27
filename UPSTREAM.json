@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-28",
+  "purpose": "Auditable source snapshot for the V2-only authoring toolkit. This inventory does not grant or replace source licenses.",
+  "hashing": {
+    "upstreamSha256": "SHA256 of exact actual upstream working-tree bytes read and reused",
+    "upstreamGitBlobSha256": "SHA256 of exact pinned Git blob bytes, kept separately from working-tree bytes",
+    "referenceSha256": "Reference sha256 is exact actual working-tree bytes; gitBlobSha256 is exact pinned Git blob bytes",
+    "bundledSha256": "SHA256 of bundled UTF-8 file content with CRLF normalized to LF for portable Git checkouts"
+  },
+  "repositories": [
+    {
+      "name": "BakaMusicFlutter",
+      "commit": "b8efb75c72c1075aba95cf32838f2c9b569a025b",
+      "license": "BakaMusic Source-Available License Version 1.0; see root LICENSE and NOTICE.md; retain upstream rights and attribution."
+    },
+    {
+      "name": "baka-plugins",
+      "commit": "97847deac28141aa3df24fd24b94d06e5b507a2e",
+      "usage": "Reference-only implementation/tests; no provider source is bundled by this repository.",
+      "license": "No root LICENSE was present in the inspected snapshot. Preserve existing source/attribution notices; do not infer a redistribution grant."
+    }
+  ],
+  "authoringFiles": [
+    {
+      "path": "assets/authoring/contract.cjs",
+      "upstreamRepository": "BakaMusicFlutter",
+      "upstreamPath": "docs/design/plugin-v2/authoring/contract.cjs",
+      "upstreamSha256": "67d15191f67f2a6a3e546db5d5bae038dbbcdbe7c816a298ec15879519891a84",
+      "bundledSha256": "67d15191f67f2a6a3e546db5d5bae038dbbcdbe7c816a298ec15879519891a84",
+      "changes": "Unmodified canonical publication validator.",
+      "upstreamGitBlobSha256": "67d15191f67f2a6a3e546db5d5bae038dbbcdbe7c816a298ec15879519891a84",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "path": "assets/authoring/contract-vectors.json",
+      "upstreamRepository": "BakaMusicFlutter",
+      "upstreamPath": "docs/design/plugin-v2/authoring/contract-vectors.json",
+      "upstreamSha256": "e887f53059c14654cac7582f6ef5cd8f98336c3ef4f1ccc92f4cf9be13fdb7e5",
+      "bundledSha256": "e887f53059c14654cac7582f6ef5cd8f98336c3ef4f1ccc92f4cf9be13fdb7e5",
+      "changes": "Unmodified shared positive/negative manifest and entity reference vectors.",
+      "upstreamGitBlobSha256": "e887f53059c14654cac7582f6ef5cd8f98336c3ef4f1ccc92f4cf9be13fdb7e5",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "path": "assets/authoring/contract.test.cjs",
+      "upstreamRepository": "BakaMusicFlutter",
+      "upstreamPath": "docs/design/plugin-v2/authoring/contract.test.cjs",
+      "upstreamSha256": "d8ced4f4184e2f483843e55463957199849bce0792faee39d582b97aa8a02f21",
+      "bundledSha256": "d8ced4f4184e2f483843e55463957199849bce0792faee39d582b97aa8a02f21",
+      "changes": "Unmodified shared contract/binding regression tests.",
+      "upstreamGitBlobSha256": "d8ced4f4184e2f483843e55463957199849bce0792faee39d582b97aa8a02f21",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "path": "assets/authoring/types.d.ts",
+      "upstreamRepository": "BakaMusicFlutter",
+      "upstreamPath": "docs/design/plugin-v2/authoring/types.d.ts",
+      "upstreamSha256": "1d91b96500f5a7436e7c733726a0350b788edf7bf2f8249e2d5c40edb6b3f8b8",
+      "bundledSha256": "e8118ab8f19995139e439e085e68e66f5f964697b72a011b44081b9feaf5b1ea",
+      "changes": "Clarified compression documentation and native storage missing-value union (null or undefined).",
+      "upstreamGitBlobSha256": "1d91b96500f5a7436e7c733726a0350b788edf7bf2f8249e2d5c40edb6b3f8b8",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "path": "assets/authoring/check.cjs",
+      "upstreamRepository": "BakaMusicFlutter",
+      "upstreamPath": "docs/design/plugin-v2/authoring/check.cjs",
+      "upstreamSha256": "7cca42f88a9168777f3672d6ff8d83eb963b3c1ad4fdb621721cd0c674d90c2a",
+      "bundledSha256": "4b469e2150ee29f115bcbba89cd9d6a4ac7fa432669368bb1a9be87fcf79cbff",
+      "changes": "Exact no-BOM/UTF-8 marker; owner-bound declared dispatch; allow private helpers; strict JS-safe pagination guard; bytes.compress fixture; resolver smoke; executable entry export. Node VM is trusted-source authoring, not native sandbox.",
+      "upstreamGitBlobSha256": "fd846930696f79520bdaeba6ea52cd3a8b606026ef65281a5f1db6e98a871612",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "path": "assets/authoring/minimal-provider.js",
+      "upstreamRepository": "BakaMusicFlutter",
+      "upstreamPath": "docs/design/plugin-v2/authoring/minimal-provider.js",
+      "upstreamSha256": "6bcb07bf1cad62b5fcec02a04a70db2738c169ec7f4ef63f0b99aaabb2b9253d",
+      "bundledSha256": "47d34ace14e8d5fa4589d5ff7b57ef63e5d94bfd8149e0594504f9e0ea68879a",
+      "changes": "Optional sdk.settings.baseUrl permits deterministic local native HTTP fixtures; default remains example.invalid.",
+      "upstreamGitBlobSha256": "4dd3bd6a906f7abaf0cb61276d929754825352890ee00eb37fe0eb5530cc1575",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "path": "assets/authoring/minimal-resolver.js",
+      "upstreamRepository": "BakaMusicFlutter",
+      "upstreamPath": "docs/design/plugin-v2/authoring/minimal-resolver.js",
+      "upstreamSha256": "aa378bd90b7b7680a89002866106a8ff2cf94e87bcbfc807683c69d09c4b9ef9",
+      "bundledSha256": "e4c47b4303bafd61c837bcb545459f9af08f150505ec4988608be2943adfb326",
+      "changes": "Optional sdk.settings.baseUrl permits deterministic local native HTTP fixtures; default remains example.invalid.",
+      "upstreamGitBlobSha256": "aa378bd90b7b7680a89002866106a8ff2cf94e87bcbfc807683c69d09c4b9ef9",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "path": "assets/authoring/full-provider.js",
+      "upstreamRepository": "BakaMusicFlutter",
+      "upstreamPath": "docs/design/plugin-v2/authoring/full-provider.js",
+      "upstreamSha256": "d3bd02ca6472bc67fcafa7e9404ce43c9fd2c65612da0d2ef07c413569ef2bfe",
+      "bundledSha256": "2d1a2620299379b9f434c143a18739ed2648214030ccb6f0a06780be7c69ea9f",
+      "changes": "Added discovery.similar, discovery.searchSuggestions and media.prepare for all26; strict local cursor/limit examples; declare four supported search kinds and reject unsupported kinds instead of returning music. All transport outputs remain synthetic and unplayable.",
+      "upstreamGitBlobSha256": "199288200f3d95faa285d580cd27c9dc9087fbbfb9e824f5731543a7d1838e81",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    }
+  ],
+  "references": [
+    {
+      "repository": "BakaMusicFlutter",
+      "path": "rust/crates/baka-plugin-host/src/host.rs",
+      "sha256": "fed38ea992d553daafcd661c9deec69775346a7a9749c3d0140a66f8962df0ed",
+      "gitBlobSha256": "fed38ea992d553daafcd661c9deec69775346a7a9749c3d0140a66f8962df0ed",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "BakaMusicFlutter",
+      "path": "rust/crates/baka-plugin-host/src/v2.js",
+      "sha256": "882244ec0c77d0f7dfee3d10906f4b1e72d0e0c805753312660c850aab79d3a4",
+      "gitBlobSha256": "882244ec0c77d0f7dfee3d10906f4b1e72d0e0c805753312660c850aab79d3a4",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "BakaMusicFlutter",
+      "path": "rust/crates/baka-plugin-host/src/v2.rs",
+      "sha256": "2b36bd8e6df57b8b4ef6cd5b6f0ef74eef7cf1d57ffd920a71ae63fe3ec9d220",
+      "gitBlobSha256": "4a38df6953865f88da602bbbb8d210a779888bf7c08bbba440d96fe8dcf81c91",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "BakaMusicFlutter",
+      "path": "rust/crates/baka-plugin-host/src/shim/v2_native.rs",
+      "sha256": "3d6626c111f53f5db20d018fe44d7aaccee7cc30e90e3f8dcfb81b8fda39830d",
+      "gitBlobSha256": "2824a93ee2a0ad6937d49ea2146351669bfd01343f2bacc5f28cfad4734a06d2",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "BakaMusicFlutter",
+      "path": "rust/crates/baka-core/src/plugin_contract.rs",
+      "sha256": "993b7851768bac2ad1492dfb061394e9dfb881dc3386f4e61d877d4351e0a2da",
+      "gitBlobSha256": "993b7851768bac2ad1492dfb061394e9dfb881dc3386f4e61d877d4351e0a2da",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "BakaMusicFlutter",
+      "path": "rust/crates/baka-plugin-host/examples/v2_probe.rs",
+      "sha256": "62d695ed2ca1a299c2815f519a9a2ce1af0534f1d65bef99824197eb8ad267c9",
+      "gitBlobSha256": "62d695ed2ca1a299c2815f519a9a2ce1af0534f1d65bef99824197eb8ad267c9",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "baka-plugins",
+      "path": "tests/v2-native.test.cjs",
+      "sha256": "58df52981668050d93e370ac59313338458b867015caa5be4848893631d593cb",
+      "gitBlobSha256": "cd0b25ee5814ea2f2bb0aa0859f40d3842c0c2304c78b0e5ff3e35cfed89150f",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "baka-plugins",
+      "path": "tests/v2-distribution.test.cjs",
+      "sha256": "6befc28fd28b78f8be49da03769d6060e68d155e46380c71f69d6a7cf00a0baf",
+      "gitBlobSha256": "36c670426f31f4623d5988f3c0f44d6eed5e9ffea8f7009200d608aee959cfac",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "baka-plugins",
+      "path": "plugins/v2/wy.js",
+      "sha256": "bdf44cd540264a18e4fa7d05300d201522059a8bde0db18b7c6fc9f01d965edd",
+      "gitBlobSha256": "bdf44cd540264a18e4fa7d05300d201522059a8bde0db18b7c6fc9f01d965edd",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "baka-plugins",
+      "path": "plugins/v2/qq.js",
+      "sha256": "34b6d8f30a6440e422cfb4fe13952d234de4121175c6991f61bb6846cab5ceb4",
+      "gitBlobSha256": "34b6d8f30a6440e422cfb4fe13952d234de4121175c6991f61bb6846cab5ceb4",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "baka-plugins",
+      "path": "plugins/v2/kw.js",
+      "sha256": "254fba9a002ee3076f4187ebaed0619b55a737c2d01fc19b304315a25dd26099",
+      "gitBlobSha256": "254fba9a002ee3076f4187ebaed0619b55a737c2d01fc19b304315a25dd26099",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "baka-plugins",
+      "path": "plugins/v2/kg.js",
+      "sha256": "b95c5e1c5335508eab771fa092b9a856e04c7f5256de2477c7f1ea26135e7b88",
+      "gitBlobSha256": "b95c5e1c5335508eab771fa092b9a856e04c7f5256de2477c7f1ea26135e7b88",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "baka-plugins",
+      "path": "plugins/v2/mg.js",
+      "sha256": "92e8836ef10d2bf5d47ef46447060f05cda20a1d2f08de7bb5c8bd1ff86c14ee",
+      "gitBlobSha256": "92e8836ef10d2bf5d47ef46447060f05cda20a1d2f08de7bb5c8bd1ff86c14ee",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "baka-plugins",
+      "path": "plugins/v2/bilibili.js",
+      "sha256": "20a6f5d0816651d809fd4bdc0d8a9cac828404b1eb015f76cc75d5f77f3413da",
+      "gitBlobSha256": "20a6f5d0816651d809fd4bdc0d8a9cac828404b1eb015f76cc75d5f77f3413da",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    },
+    {
+      "repository": "baka-plugins",
+      "path": "plugins/v2/am.js",
+      "sha256": "ae57ca85d77b74b6752b98a51d00f50dfa30dd58323ace81e3e75189459c0c50",
+      "gitBlobSha256": "ae57ca85d77b74b6752b98a51d00f50dfa30dd58323ace81e3e75189459c0c50",
+      "workingTreeMatchesCommitAfterLfNormalization": true
+    }
+  ],
+  "localTests": {
+    "node": "Offline trusted-source fixtures; not a security sandbox or service/device proof.",
+    "native": "Optional actual v2_probe executable selected by BAKA_V2_PROBE; npm run test:native fails without configuration; loopback HTTP only; resolver test invokes source separately and does not prove application binding UI."
+  }
+}

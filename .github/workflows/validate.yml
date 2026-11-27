@@ -1,0 +1,24 @@
+name: Validate authoring toolkit
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  offline:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [20, 22, 24]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      # All tooling uses Node builtins. No install or live service credentials.
+      - run: npm test
+      - run: npm run check
+      - run: npm run check:docs
+      # Native host tests run separately when BAKA_V2_PROBE is configured;
+      # skipped native tests here are not evidence of a QuickJS host run.

@@ -1,0 +1,14 @@
+{
+  "name": "baka-plugin-dev",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline, dependency-free BakaMusic V2 plugin authoring skill and checks",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test",
+    "check": "node scripts/check.cjs",
+    "check:docs": "node scripts/check-docs.cjs",
+    "test:native": "node scripts/run-native.cjs"
+  }
+}

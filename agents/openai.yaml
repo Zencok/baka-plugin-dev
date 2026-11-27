@@ -1,0 +1,4 @@
+interface:
+  display_name: "Baka V2 插件开发"
+  short_description: "开发、迁移与验证 Baka V2 音乐源和媒体解析器插件"
+  default_prompt: "使用 $baka-plugin-dev，根据我的数据源接口开发并验证 Baka V2 插件。"
