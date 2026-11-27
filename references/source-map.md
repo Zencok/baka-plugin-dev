@@ -50,7 +50,7 @@ Flutter 的 `PROPOSAL.md`、`OPTIONS.md` 记录设计选型，后续 `SPEC.md` �
 
 ## V2-only 的准确含义
 
-新插件和当前 Flutter/Rust 执行环境只使用 V2 契约。当前应用仍能在导入路径把某些历史 LX 文件转换为 V2 resolver；这不恢复全局 LX 运行时，也不使 LX 事件 API 成为新插件开发接口。
+新插件和当前 Flutter/Rust 执行环境只使用 V2 契约。现有原始及混淆 LX 脚本必须继续直接导入；显式 LX 选择绕过格式识别，原文不改写，兼容包装在该插件独占的 QuickJS 上下文提供 LX 全局对象以支持间接 eval、Function 和构造器查找。普通 V2 包保持精简环境，LX 事件 API 不成为新插件开发接口。
 
 BakaMusic Electron 仓库移除旧教程、改为引用此仓库，只改变文档入口。它当前的插件类型和 RPC 仍是另一套接口；此任务没有迁移其运行时。因此新 V2 插件的客户端目标应明确写为已支持当前契约的版本。
 
