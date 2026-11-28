@@ -1,12 +1,33 @@
 # 七个正式 V2 实现的阅读路线
 
-本页以 `D:/Github/Music/baka-plugins` 的 `97847deac28141aa3df24fd24b94d06e5b507a2e` 为核对快照，记录于 2026-11-28。`plugins/v2` 中是维护中的公开成品实现模板，已经包含真实服务的业务分派、字段映射和源协议；本仓库 `assets/authoring` 中则是合成教学夹具。两者都不能仅凭源码或离线测试被描述为当前源站可用、已授权或设备播放通过。
+成品仓库直接使用 [Zencok/baka-plugins](https://github.com/Zencok/baka-plugins)，新开发先看维护中的 [plugins/v2](https://github.com/Zencok/baka-plugins/tree/main/plugins/v2)。本页另保留提交 `97847deac28141aa3df24fd24b94d06e5b507a2e` 的核对快照，记录于 2026-11-28；下方带版本表格是该快照，不是最新版本承诺。
+
+成品包含实际服务的业务分派、字段映射和源协议；本仓库提供可配置的直链模板与合成教学夹具。两者都不能仅凭源码或离线测试被描述为当前源站可用、已授权或设备播放通过。
 
 契约与 SDK 的权威位置见 [source-map.md](./source-map.md)。完整编写过程见 [development-guide.md](./development-guide.md)，行为与原生测试见 [testing-and-release.md](./testing-and-release.md)。本页只给源码和函数导航，不复制整份 provider、账户配置、签名材料或分发后的个性化脚本。
 
-## 从这些文件开始
+## 在线参考入口
 
-以下路径均以用户指定的 `D:/Github/Music/baka-plugins` 为根。源码链接使用本地已核对的 Git remote `https://github.com/Zencok/baka-plugins`，固定到上述完整提交；它们不依赖 skill 安装目录。其他 checkout 的定位方式见 [来源配置](./source-map.md)。
+不必拥有 `D:/Github/Music/baka-plugins`；agents 可直接读取以下链接，或使用自己的本地 checkout。`main` 会变化，开始任务时记录实际参考的提交；要复现本页历史证据则使用后面的固定提交链接。
+
+| 目标 | 当前源码 |
+|---|---|
+| QQ | [plugins/v2/qq.js](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/qq.js) |
+| 网易云 | [plugins/v2/wy.js](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/wy.js) |
+| 酷狗 | [plugins/v2/kg.js](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/kg.js) |
+| 酷我 | [plugins/v2/kw.js](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/kw.js) |
+| 咪咕 | [plugins/v2/mg.js](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/mg.js) |
+| Bilibili | [plugins/v2/bilibili.js](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/bilibili.js) |
+| Apple Music | [plugins/v2/am.js](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/am.js) |
+| V2 结构、维护与署名 | [README](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/README.md)、[DESIGN](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/DESIGN.md)、[ATTRIBUTION](https://github.com/Zencok/baka-plugins/blob/main/plugins/v2/ATTRIBUTION.md) |
+| 分发后的完整文件如何生成 | [v2-plugin.js](https://github.com/Zencok/baka-plugins/blob/main/functions/v2-plugin.js)、[v2-source-handler.js](https://github.com/Zencok/baka-plugins/blob/main/functions/v2-source-handler.js)、[v2-subscription.js](https://github.com/Zencok/baka-plugins/blob/main/functions/v2-subscription.js) |
+| 行为、错误与原生回归 | [tests](https://github.com/Zencok/baka-plugins/tree/main/tests)，按下文测试表选择 `v2-*` |
+
+先看目标平台的 manifest 和嵌套 handlers，再沿业务函数、分发注入和测试追踪一条完整流程。仓库保留的 V1 文件、构建器使用的 Node API 和服务器依赖都不是新 V2 插件接口。已有公共包 ID 仅用于理解协议，不得冒用为自己的新包。
+
+## 固定快照的文件与版本
+
+下表源码链接固定到上述完整提交，不依赖 skill 安装目录。表中的相对路径以成品仓库为根；本地 checkout 可在任意位置。其他来源的定位方式见 [来源配置](./source-map.md)。
 
 | 实现 | 文件 | 包 ID / sourceId | 本快照版本 | 值得研究的流程 |
 |---|---|---|---|---|

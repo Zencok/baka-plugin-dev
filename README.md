@@ -2,7 +2,7 @@
 
 这是 Baka V2 插件开发的独立文档与工具仓库，同时提供可直接安装的 `baka-plugin-dev` skill。新插件只面向 V2；教程、API 参考、模板和检查工具在此集中维护。BakaMusic 应用仓库只保留开发入口引用。
 
-插件成品仓库是 **`D:/Github/Music/baka-plugins/plugins/v2`**，本仓库提供开发方法与工具，不复制发行插件。当前接口依据 BakaMusicFlutter 的 Rust/QuickJS 宿主、共享契约测试及七个成品 V2 插件核对，见[来源与支持边界](references/source-map.md)。
+插件成品直接参考 **[Zencok/baka-plugins](https://github.com/Zencok/baka-plugins)** 的 **[plugins/v2](https://github.com/Zencok/baka-plugins/tree/main/plugins/v2)**；agents 可在线读取，不需要固定本地路径。本仓库提供开发方法与工具，不复制发行插件。当前接口依据 BakaMusicFlutter 的 Rust/QuickJS 宿主、共享契约测试及七个成品 V2 插件核对，见[来源与支持边界](references/source-map.md)。
 
 ## 开始开发
 
@@ -12,24 +12,7 @@
 4. 用[成品插件阅读指南](references/production-examples.md)定位真实实现。
 5. 按[测试、导入与发布](references/testing-and-release.md)验证交付。
 
-最小文件形式如下。它只演示格式，真正的插件应返回已接入数据源的结果：
-
-```js
-// @baka-provider 2
-module.exports = {
-  manifest: {
-    apiVersion: 2, kind: 'provider',
-    id: 'org.example.catalog', sourceId: 'example.v1',
-    name: 'Example Music', author: 'Example author', version: '1.0.0',
-    capabilities: ['search'],
-  },
-  handlers: {
-    async search(request, sdk) {
-      return { items: [], nextCursor: null };
-    },
-  },
-};
-```
+先按[当前体系交付配方](references/authoring-playbook.md)选择模板和 sourceId，不从空实现重新拼接口。`sourceId` 是业务协议，不是平台开关；自定义协议合法，但不自动兼容 `qq.v1` 或公共 LX 绑定。
 
 ## 模板和验证
 
@@ -42,6 +25,7 @@ node scripts/check.cjs assets/authoring/minimal-provider.js
 node --check assets/authoring/minimal-provider.js
 ```
 
+- [可导入直链模板](assets/authoring/direct-url-provider.js)：直接导入，在插件配置填写合法音频直链和标题后即可搜索取流；不附带音源，媒体播放依赖实际 URL 和目标设备。
 - [最小 provider](assets/authoring/minimal-provider.js)：HTTP 数据源起点，`.invalid` 地址需要替换。
 - [最小 resolver](assets/authoring/minimal-resolver.js)：显式绑定的独立媒体解析器。
 - [完整离线示例](assets/authoring/full-provider.js)：合成数据演示能力契约，不提供真实音乐服务。
@@ -53,6 +37,12 @@ node --check assets/authoring/minimal-provider.js
 ```powershell
 $env:BAKA_V2_PROBE = 'D:/Github/Music/BakaMusicFlutter/rust/target/debug/examples/v2_probe.exe'
 npm run test:native
+node scripts/check.cjs --native assets/authoring/direct-url-provider.js
+
+# 可选：隔离原生导入/配置测试，不触碰用户客户端数据
+$env:BAKA_FLUTTER_APP = 'D:/Github/Music/BakaMusicFlutter'
+$env:BAKA_FLUTTER_SDK = 'D:/flutter'
+npm run test:import
 ```
 
 Node 检查、真实宿主测试、已安装客户端验证和远程服务可用性是不同层次的证据。完整命令和核对方法见[测试说明](references/testing-and-release.md)。

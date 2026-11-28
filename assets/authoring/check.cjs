@@ -24,7 +24,10 @@ function validate(provider) {
   assert.ok(provider.handlers && typeof provider.handlers === 'object', 'handlers object required');
   for (const name of m.capabilities) {
     assert.ok(capabilities.includes(name), 'unknown capability ' + name);
-    assert.equal(typeof getHandler(provider, name), 'function', 'missing handler ' + name);
+    if (typeof getHandler(provider, name) !== 'function' && name.includes('.') && Object.hasOwn(provider.handlers, name)) {
+      throw new Error('flat handler ' + name + ' is not dispatched; define nested handlers.' + name + '(request, sdk)');
+    }
+    assert.equal(typeof getHandler(provider, name), 'function', 'missing handler ' + name + '; expected handlers.' + name + '(request, sdk)');
   }
   // Match host dispatch: only declared capabilities must be callable. Helpers
   // under handlers are ignored; they do not become public capabilities.
@@ -50,7 +53,7 @@ function validatePage(result, requestCursor = null, limit = 100) {
 function load(file) {
   const source = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(fs.readFileSync(file));
   assert.equal(source.split(/\r?\n/, 1)[0], '// @baka-provider 2', 'exact first-line V2 source profile marker (no BOM)');
-  const sandbox = { module: { exports: {} } };
+  const sandbox = { module: { exports: {} }, URL, URLSearchParams };
   vm.runInNewContext(source, sandbox, { filename: file, timeout: 1000 });
   return validate(sandbox.module.exports);
 }

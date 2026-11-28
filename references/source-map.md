@@ -4,7 +4,9 @@
 
 ## 当前来源
 
-默认本地 checkout：
+公共成品的在线入口为 [Zencok/baka-plugins](https://github.com/Zencok/baka-plugins)，新 V2 适配直接读取 [plugins/v2](https://github.com/Zencok/baka-plugins/tree/main/plugins/v2)，平台文件、分发器与测试的直接链接见[成品阅读路线](production-examples.md#在线参考入口)。不要求固定本地路径；在线不可用时使用已记录版本的本地 checkout，并注明版本与未核对最新状态。
+
+下表是维护者核对时的本地 checkout，供复现定位，不是 skill 安装前提：
 
 | 仓库 | 路径 | 核对时的 HEAD |
 |---|---|---|
@@ -31,6 +33,7 @@
 | Flutter 实体和绑定校验 | Flutter `lib/plugins/plugin_contract.dart`、`plugin_binding_policy.dart` |
 | 配置输入实际处理 | Flutter `lib/features/plugins/plugins_page.dart` |
 | 绑定后的媒体/回调路由 | Flutter `rust/crates/baka-ffi/src/plugin_media.rs` |
+| 默认音质顺序与播放源准备 | Flutter `rust/crates/baka-ffi/src/{playback.rs,quality_request.rs}`、`lib/rust/bridge.dart` |
 | 导入、禁用、替换和恢复语义 | Flutter `docs/design/plugin-v2/UPGRADE_RECOVERY.md`、`MANAGEMENT_UI.md` |
 | 下载任务与显式错误码 | Flutter `docs/design/plugin-v2/DOWNLOADS.md`、`DOWNLOAD_IMPLEMENTATION.md` |
 | 成品提供方协议与元数据 | 公共插件 `plugins/v2/{wy,qq,kw,kg,mg,bilibili,am}.js` |

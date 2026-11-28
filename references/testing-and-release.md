@@ -22,6 +22,8 @@ npm run check:docs
 
 默认不需要网络或 npm 依赖。未配置原生探针时，原生用例会明确跳过；独立执行 `test:native` 必须先配置探针，缺失时会失败。Node VM 是作者检查环境，不能证明生产隔离、内存限制或取消行为。
 
+对你将交付的最终文件，还可运行 `node scripts/check.cjs --native ./my-provider.js`。必须配置实际 `BAKA_V2_PROBE`，否则命令失败；它在结构检查后加载同一源文件，只确认真实 lean QuickJS 的导入契约，不调用 handler、不证明服务可用。不要把为诊断改写的副本当作原文件通过。
+
 ## 2. 为你的服务增加离线行为测试
 
 使用脱敏的真实响应 fixture 和可注入的 `sdk`。直接调用插件中的 handler，断言结果和发出的请求，不依赖内部实现的字符串排列。仓库工具提供的 `createSDK` 只针对合成模板，不是任意服务模拟器。
@@ -121,7 +123,21 @@ cargo test --manifest-path D:/Github/Music/BakaMusicFlutter/rust/Cargo.toml -p b
 
 Qt、Electron、Flutter 是不同宿主边界；本教程核对的是当前 Flutter/Rust V2 契约。不要从应用名称或“CommonJS”这一共同点推断所有旧客户端均兼容。真机播放还取决于媒体、系统和设备，需记录实际客户端版本、平台、执行步骤和结果。
 
-## 7. 独立发布与更新
+## 7. 隔离的 Flutter 应用导入回归
+
+本仓库还提供 `npm run test:import`。它依赖已准备的 Flutter SDK、应用依赖和当前构建的原生 FFI 库，不自动安装 SDK、不修改应用实现，不访问用户已安装客户端的插件库。
+
+```powershell
+$env:BAKA_FLUTTER_APP = 'D:/Github/Music/BakaMusicFlutter'
+$env:BAKA_FLUTTER_SDK = 'D:/flutter'
+npm run test:import
+```
+
+脚本在目标应用 `.dart_tool` 下临时放置测试，使用临时配置/存储和 loopback 订阅，结束后清理。回归验证直链模板经 URL/相对订阅导入、配置写入与重载后保留、搜索、媒体地址返回、默认 `master` 播放源准备、默认 `128k` 直接取流、同 ID 更新，以及拒绝平铺 handler。HTTP fixture 提供有效的合成 PCM WAV，测试不代表设备音频解码。未配置环境或缺少依赖/原生库会失败，不能写成“已通过”。`npm test` 默认离线运行，不隐式触发此步骤。
+
+这些是**仓库模板**的回归；不会自动验证任意新生成的插件或真实服务。交付新源时复用测试方法，为它准备真实字段的脱敏 fixture，并另外记录实际客户端/设备播放结果。
+
+## 8. 独立发布与更新
 
 1. 保持 `manifest.id`，只在协议不兼容时考虑新的 `sourceId`，不要随版本改实体归属。
 2. 增加 `version`。本项目成品仓库采用十进位进位约定：`1.0.9` 后为 `1.1.0`；保持构建元数据与实际源版本一致。

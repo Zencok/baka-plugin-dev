@@ -2,6 +2,8 @@
 
 目标：把一个你能访问的 HTTPS 音乐目录，接入搜索和音频解析。先完成这个闭环，再增加歌词、集合和账号。你需要接口文档、脱敏响应样本，以及 Node.js 20 或更新版本。
 
+先读[当前体系交付配方](authoring-playbook.md)，它区分可直接导入配置的直链模板、HTTP 骨架和不能当成品发布的合成 fixture。只想先验证客户端闭环时，直接导入[直链模板](../assets/authoring/direct-url-provider.js)，在插件配置中填写合法音频 URL 与标题，再搜索标题；无需先发明服务接口。
+
 ## 1. 确定插件类型与身份
 
 能搜索和浏览目录的数据源用 `provider`；只为已有 provider 提供媒体地址的独立插件用 `resolver`。第一个插件从 provider 开始。
@@ -23,7 +25,7 @@ Copy-Item assets/authoring/types.d.ts ./types.d.ts
 // @baka-provider 2
 ```
 
-底部同步导出 `module.exports = {manifest, handlers}`。不要在顶层请求接口、登录或等待初始化；外部操作放在 handler 中。
+底部同步导出 `module.exports = {manifest, handlers}`。`capabilities` 写 `media.resolve`，对象必须写 `handlers.media.resolve`；不能写平铺的 `handlers["media.resolve"]`。不要在顶层请求接口、登录或等待初始化；外部操作放在 handler 中。
 
 ## 3. 用实际字段替换目录映射
 
@@ -41,7 +43,7 @@ Copy-Item assets/authoring/types.d.ts ./types.d.ts
 
 ```js
 async function search(request, sdk) {
-  if (request.kind !== 'music') return { items: [], nextCursor: null };
+  if (request.kind !== 'music') throw new Error('Unsupported search kind: ' + request.kind);
   const query = new URLSearchParams({ q: request.query, limit: String(request.limit) });
   if (request.cursor !== null) query.set('cursor', request.cursor);
   const response = await sdk.http.request({
@@ -74,7 +76,7 @@ async function search(request, sdk) {
 
 保留 `songId` 的原始类型：数值 `7` 和字符串 `"7"` 是两个身份。`duration` 是秒；服务毫秒值只在映射时换算一次。真实响应格式不同就按真实字段映射，不要让服务的异常 JSON 被识别为“没有歌曲”。
 
-这里的服务恰好使用相同游标；如果你的接口用页码或 offset，要在插件内实现可校验的游标，而不是要求客户端提供旧的 `page` 参数。见[分页教程](development-guide.md#分页与集合)。
+上面的字段映射片段假设服务游标已绑定当前查询上下文，不能直接套用到任意 API。交付时必须按[分页教程](development-guide.md#分页与集合)把查询、kind、limit、账号与来源绑定到可校验游标；如果上游使用页码或 offset，也由插件转换，不能要求客户端提供旧的 `page` 参数。
 
 ## 4. 接通媒体解析
 
@@ -108,6 +110,6 @@ npm test
 
 只交付最终的 `.js`。在支持此 V2 契约的客户端插件管理中从文件、源码或 HTTPS 地址导入，填写插件需要的配置，搜索一首你有权限访问的歌曲，验证播放、切歌、返回列表和错误提示。涉及配置修改时，确认插件已经使用新的设置快照。
 
-当前依据是 BakaMusicFlutter 的 V2 宿主。Electron 仓库文档迁移不代表其运行时已支持此契约。不要把 V2 文件放进旧格式客户端后修改成旧 API 以迁就它；先核实客户端支持版本。
+具体 Flutter/Electron 已核对实现和旧发行版边界见[源码地图](source-map.md)，不能由应用同名或 CommonJS 语法推断所有版本支持。不要把 V2 文件放进旧格式客户端后修改成旧 API 以迁就它；先核实客户端支持版本。
 
 完成后再阅读[完整开发教程](development-guide.md)、[能力参考](capabilities.md)与[成品源码路线](production-examples.md)。

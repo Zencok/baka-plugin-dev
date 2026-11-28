@@ -1,0 +1,13 @@
+{
+  "id": "improve-v2-authoring-guardrails",
+  "title": "Strengthen V2 authoring skill, importable templates and native/application verification",
+  "status": "completed",
+  "complexity": "L",
+  "risk": "medium",
+  "domain": "plugin-authoring",
+  "currentPhase": "completed",
+  "nextAction": "Deliver verified skill and templates in one atomic local commit; no push",
+  "createdAt": "2026-11-28T06:49:43.660503+00:00",
+  "branch": "main",
+  "completedAt": "2026-11-28T07:14:13.437258+00:00"
+}

@@ -28,8 +28,8 @@ module.exports = {
   },
   handlers: {
     async search(request, sdk) {
-      // 接入真实服务后返回当前页；这个空页只演示返回结构。
-      return { items: [], nextCursor: null, total: 0 };
+      // 仅演示声明结构；正式开发复制完整模板并接入真实服务。
+      throw new Error('Implement real service search before release');
     },
   },
 };
@@ -105,6 +105,8 @@ manifest 必须是有限、无循环的 JSON：字符串、布尔、有限数值
 原生验证后拥有完整 manifest 快照，后续修改 `module.exports.manifest` 不能修改注册身份。Dart 使用不可变元数据；作者工具中的 `contract.cjs` 的 `validateManifest` 返回冻结副本，但 `check.cjs` 的 `load` 返回原始导出对象，不会把它冻结。不要把开发检查器返回的可变对象当作宿主注册表，也不要通过修改导出对象更新运行时配置。
 
 `sdk.settings`、manifest 快照、provider 业务缓存是不同概念。只冻结对象并不能保证业务缓存与当前账户、查询或更新代次一致；缓存生命周期仍要显式设计。
+
+应用策略和通用协议必须分开：当前普通 LX 绑定只接受精确的 `cc.baka.{qq,wy,kg,kw,mg}` / `{qq,wy,kg,kw,mg}.v1` 对，且要求 `media.prepare`。自定义 sourceId 本身合法，但不能通过只改 sourceId、显示名或复用他人包 ID 获得兼容。独立聚合源的跨平台 ID 设计和完整决策见[交付配方](authoring-playbook.md#sourceid-不是平台开关也不是插件接口版本)。
 
 ## 实体身份与载荷
 

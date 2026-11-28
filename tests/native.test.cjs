@@ -44,7 +44,7 @@ test('actual V2 host admission, templates, pagination, resolver context and SDK'
   });
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
   const settingsFile = path.join(directory, 'settings.json');
-  fs.writeFileSync(settingsFile, JSON.stringify({ baseUrl: `http://127.0.0.1:${server.address().port}`, fixture: 'configured' }));
+  fs.writeFileSync(settingsFile, JSON.stringify({ baseUrl: `http://127.0.0.1:${server.address().port}`, fixture: 'configured', audioUrl: 'https://audio.example.invalid/fixture.mp3', trackId: 'stable-track', title: 'Configured fixture' }));
   async function execute(source, capability, request = {}) {
     const call = String(sequence++);
     const sourceFile = path.join(directory, call + '.js');
@@ -69,11 +69,37 @@ test('actual V2 host admission, templates, pagination, resolver context and SDK'
     + JSON.stringify({ ...manifest, ...changes }) + ',handlers:' + handlers + '};\n';
   try {
     await t.test('bundled templates load with lean globals', async () => {
-      for (const name of ['minimal-provider', 'minimal-resolver', 'full-provider']) {
+      for (const name of ['minimal-provider', 'minimal-resolver', 'full-provider', 'direct-url-provider']) {
         const { summary } = await execute(sourceOf(name));
         assert.equal(summary.lean, true, name);
-        assert.equal(summary.providerId, name === 'minimal-resolver' ? 'example.v2.resolver' : name === 'full-provider' ? 'example.v2.full' : 'example.v2.minimal');
+        assert.equal(summary.providerId, ({ 'minimal-provider': 'example.v2.minimal', 'minimal-resolver': 'example.v2.resolver', 'full-provider': 'example.v2.full', 'direct-url-provider': 'org.example.direct-audio' })[name]);
       }
+    });
+    await t.test('configured direct URL template searches and resolves through actual QuickJS', async () => {
+      const direct = sourceOf('direct-url-provider');
+      const { value: page } = await execute(direct, 'search', { query: 'fixture', kind: 'music', cursor: null, limit: 1 });
+      validatePage(page, null, 1);
+      assert.equal(page.items[0].id, 'stable-track');
+      assert.doesNotMatch(JSON.stringify(page), /https:/);
+      const { value: entity } = await execute(direct, 'entities.get', { entity: { id: 'stable-track' } });
+      assert.equal(entity.id, 'stable-track');
+      const { value: source } = await execute(direct, 'media.resolve', { entity, quality: null });
+      assert.equal(source.url, 'https://audio.example.invalid/fixture.mp3');
+      assert.equal(source.quality, 'original');
+      assert.equal((await execute(direct, 'entities.get', { entity: { id: 'missing' } })).value, null);
+      assert.equal((await execute(direct, 'entities.get', { entity: { id: entity.id, kind: 'album' } })).value, null);
+      assert.equal((await execute(direct, 'media.resolve', { entity: { id: entity.id, kind: 'lyric' }, quality: null })).value, null);
+      await assert.rejects(execute(direct, 'search', { query: '', kind: 'lyric', cursor: null, limit: 1 }));
+      assert.equal((await execute(direct, 'media.resolve', { entity, quality: 'master' })).value.quality, 'original');
+      await assert.rejects(execute(direct, 'media.resolve', { entity, quality: 'invented' }));
+    });
+    await t.test('explicit authoring CLI admits unmodified files in the configured real host', async () => {
+      const result = await run(process.execPath, [path.join(__dirname, '../scripts/check.cjs'), '--native', path.join(authoring, 'direct-url-provider.js')], {
+        timeout: 20000, env: { ...process.env, BAKA_V2_PROBE: probe },
+      });
+      assert.match(result.stdout, /org\.example\.direct-audio: native QuickJS admission valid/);
+      const flat = synthetic('{"entities.get":()=>null}', { capabilities: ['entities.get'], sourceId: 'cit.v1' });
+      await assert.rejects(execute(flat), error => /missing V2 handler: entities.get/.test(error.stderr));
     });
     await t.test('old profiles, BOMs, identity aliases and invalid declarations fail', async () => {
       for (const source of ['\uFEFF' + minimal, '\n' + minimal, minimal.replace('provider 2', 'provider 1'),

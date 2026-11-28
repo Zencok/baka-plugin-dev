@@ -67,8 +67,8 @@
       "upstreamRepository": "BakaMusicFlutter",
       "upstreamPath": "docs/design/plugin-v2/authoring/check.cjs",
       "upstreamSha256": "7cca42f88a9168777f3672d6ff8d83eb963b3c1ad4fdb621721cd0c674d90c2a",
-      "bundledSha256": "4b469e2150ee29f115bcbba89cd9d6a4ac7fa432669368bb1a9be87fcf79cbff",
-      "changes": "Exact no-BOM/UTF-8 marker; owner-bound declared dispatch; allow private helpers; strict JS-safe pagination guard; bytes.compress fixture; resolver smoke; executable entry export. Node VM is trusted-source authoring, not native sandbox.",
+      "bundledSha256": "e1e205a9594667d639bfaf99b6143bbfd566da48702004eb037b1aceaa8f4dd0",
+      "changes": "Exact no-BOM/UTF-8 marker; owner-bound declared dispatch; allow private helpers; strict JS-safe pagination guard; bytes.compress fixture; resolver smoke; executable entry export. Node VM is trusted-source authoring, not native sandbox. Added actionable flat-handler diagnostics and native-supported URL/URLSearchParams in the trusted-source loader; no Node globals exposed.",
       "upstreamGitBlobSha256": "fd846930696f79520bdaeba6ea52cd3a8b606026ef65281a5f1db6e98a871612",
       "workingTreeMatchesCommitAfterLfNormalization": true
     },
@@ -77,8 +77,8 @@
       "upstreamRepository": "BakaMusicFlutter",
       "upstreamPath": "docs/design/plugin-v2/authoring/minimal-provider.js",
       "upstreamSha256": "6bcb07bf1cad62b5fcec02a04a70db2738c169ec7f4ef63f0b99aaabb2b9253d",
-      "bundledSha256": "47d34ace14e8d5fa4589d5ff7b57ef63e5d94bfd8149e0594504f9e0ea68879a",
-      "changes": "Optional sdk.settings.baseUrl permits deterministic local native HTTP fixtures; default remains example.invalid.",
+      "bundledSha256": "9d24f4c634ad0e6809b6e877df39a573d2e7b8fc3b3242aecfdb930803b7d428",
+      "changes": "Optional sdk.settings.baseUrl permits deterministic local native HTTP fixtures; default remains example.invalid. Version 1.0.1: explicit music kind, typed ID/zero preservation, strict bounded pages, HTTP/business errors and actual media URL requirement. Bound upstream cursors to query/kind/limit and a non-plaintext settings digest with a native byte-limit check.",
       "upstreamGitBlobSha256": "4dd3bd6a906f7abaf0cb61276d929754825352890ee00eb37fe0eb5530cc1575",
       "workingTreeMatchesCommitAfterLfNormalization": true
     },
@@ -212,6 +212,14 @@
   ],
   "localTests": {
     "node": "Offline trusted-source fixtures; not a security sandbox or service/device proof.",
-    "native": "Optional actual v2_probe executable selected by BAKA_V2_PROBE; npm run test:native fails without configuration; loopback HTTP only; resolver test invokes source separately and does not prove application binding UI."
-  }
+    "native": "Optional actual v2_probe executable selected by BAKA_V2_PROBE; npm run test:native fails without configuration; loopback HTTP only; resolver test invokes source separately and does not prove application binding UI.",
+    "application": "Optional npm run test:import with BAKA_FLUTTER_APP/BAKA_FLUTTER_SDK; isolated preferences/storage, loopback subscription and generated PCM WAV; native import/configuration reload/search/default playback source preparation and HTTP range retrieval, not device decoding."
+  },
+  "localAdditions": [
+    {
+      "path": "assets/authoring/direct-url-provider.js",
+      "origin": "Original local authoring template; configured authorized HTTP(S) audio URL, no bundled service, credentials or media.",
+      "bundledSha256": "6ed0af088ac08f40524df18372e22d0f00861daa0ec66847de57cca407f60d1d"
+    }
+  ]
 }
